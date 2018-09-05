@@ -1,0 +1,1998 @@
+{
+	"info": {
+		"_postman_id": "a24a9a4c-4c00-4095-bf1e-fdbcb523de5c",
+		"name": "MyRia App Runner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"Token\", jsonData.access_token);",
+									"postman.setEnvironmentVariable(\"Token_Type\", jsonData.token_type);",
+									"postman.setEnvironmentVariable(\"Token_Refresh\", jsonData.refresh_token);",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "grant_type",
+								"value": "password"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.0.8"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							},
+							{
+								"key": "",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "{{userEmail}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{userPassword}}",
+									"type": "text"
+								},
+								{
+									"key": "AppVersionNo",
+									"value": "0.1",
+									"type": "text"
+								},
+								{
+									"key": "UserLanguage",
+									"value": "ES",
+									"type": "text"
+								},
+								{
+									"key": "UserLocalTime",
+									"value": "01/01/2017 17:00",
+									"type": "text"
+								},
+								{
+									"key": "UserLocale",
+									"value": "en-US",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "de709e5a-8190-42e4-8c40-1c1ba0d86784",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "PlatformVersion",
+									"value": "7.0",
+									"type": "text"
+								},
+								{
+									"key": "Platform",
+									"value": "Android",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/token",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"token"
+							]
+						},
+						"description": "Log in the Ria app user which returns a valid access_token"
+					},
+					"response": []
+				},
+				{
+					"name": "User Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"CustomerID\", jsonData.Customers.map(customer => customer.CustomerId));",
+									"postman.setGlobalVariable(\"CountryId\", jsonData.Customers.map(x => x.CountryId));",
+									"postman.setGlobalVariable(\"Firstname\", jsonData.Customers.map(x => x.FirstLastName));",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.1.0"
+							},
+							{
+								"key": "platform",
+								"value": "iOS"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User"
+							]
+						},
+						"description": "Get personal information regarding a user and associated Settings"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Country features",
+			"item": [
+				{
+					"name": "Features",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "2.0.0"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "platformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Features",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Features"
+							]
+						},
+						"description": "List of features enabled for Countries and Languages"
+					},
+					"response": []
+				},
+				{
+					"name": "Countries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "2.0.0"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Countries",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Countries"
+							]
+						},
+						"description": "Return the list of all the available countries"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Create Transaction",
+			"item": [
+				{
+					"name": "Beneficiaries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"//postman.setGlobalVariable(\"BeneficiaryID\", jsonData.map(beneficiary => beneficiary.Id));",
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"BeneficiaryID\", jsonData.map(beneficiary => beneficiary.Id)[0]);",
+									"postman.setGlobalVariable(\"PayAgentId\", jsonData.map(beneficiary => beneficiary.PayAgentId)[0]);",
+									"postman.setGlobalVariable(\"PayAgentLocId\", jsonData.map(beneficiary => beneficiary.PayAgentLocId)[0]);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/Beneficiaries",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"Beneficiaries"
+							]
+						},
+						"description": "List of regular Beneficiaries associated to a specific customer"
+					},
+					"response": []
+				},
+				{
+					"name": "TransactionPreview",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setGlobalVariable('isoTime',(new Date()).toISOString());"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"SendAmount\", jsonData.SendAmount);",
+									"",
+									"postman.setGlobalVariable(\"PayoutAmount\", jsonData.PayoutAmount);",
+									"",
+									"postman.setGlobalVariable(\"ExchangeRate\", jsonData.ExchangeRate);",
+									"",
+									"postman.setGlobalVariable(\"Surcharge\", jsonData.Surcharge);",
+									"",
+									"postman.setGlobalVariable(\"CustomerFee\", jsonData.CustomerFee);",
+									"",
+									"postman.setGlobalVariable(\"Tax\", jsonData.Tax);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"UserLanguage\": \"es\",\r\n  \"DeviceId\": 0,\r\n  \"DeviceTime\": \"{{isoTime}}\",\r\n  \"LocalDate\": \"{{isoTime}}\",\r\n  \"BeneficiaryId\": {{BeneficiaryID}},\r\n  \"Amount\": 12,\r\n  \"AmountTypeId\": 1,\r\n  \"Currency\": \"EUR\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/TransactionPreview",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"TransactionPreview"
+							]
+						},
+						"description": "Perform a transaction preview in order to obtain Customer and Beneficiary complete information, rates and fees"
+					},
+					"response": []
+				},
+				{
+					"name": "GetTransactionReasons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"ReasonID\", jsonData.map(beneficiary => beneficiary.ReasonId)[0]);",
+									"",
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"PayAgentId\": {{PayAgentId}},\r\n  \"PayAgentLocId\": {{PayAgentLocId}}\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/Beneficiary/{{BeneficiaryID}}/GetTransactionReasons",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"Beneficiary",
+								"{{BeneficiaryID}}",
+								"GetTransactionReasons"
+							]
+						},
+						"description": "Returns posible reasons for a new transaction"
+					},
+					"response": []
+				},
+				{
+					"name": "LastTransactionAmounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/Beneficiaries/{{BeneficiaryID}}/LastTransactionAmounts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"Beneficiaries",
+								"{{BeneficiaryID}}",
+								"LastTransactionAmounts"
+							]
+						},
+						"description": "Gets last transaction information regarding sending and payout amounts copy"
+					},
+					"response": []
+				},
+				{
+					"name": "Transaction creation",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"postman.setGlobalVariable('isoTime',(new Date()).toISOString());"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setGlobalVariable(\"OrderNo\", jsonData.OrderNo);",
+									"postman.setGlobalVariable(\"OrderID\", jsonData.OrderId);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"RetVal is 0\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.RetVal).to.eql(0);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n   \"SendAmount\":{{SendAmount}},\r\n   \"PayoutAmount\":{{PayoutAmount}},\r\n   \"ExchangeRate\":{{ExchangeRate}},\r\n   \"SendSurcharge\":{{Surcharge}},\r\n   \"SendFee\":{{CustomerFee}},\r\n   \"Tax\":{{Tax}},\r\n   \"TransferReasonId\":{{ReasonID}},\r\n   \"BeneficiaryId\":{{BeneficiaryID}},\r\n   \"Amount\":{{SendAmount}},\r\n   \"Currency\":\"EUR\",\r\n   \"AmountTypeId\":1,\r\n   \"UserLanguage\":\"es\",\r\n   \"DeviceId\":0,\r\n   \"DeviceTime\":\"{{isoTime}}\",\r\n   \"LocalDate\":\"{{isoTime}}\",\r\n   \"SendOrderRegardlessOnHold\":false\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/Transaction",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"Transaction"
+							]
+						},
+						"description": "Enters a new staged transaction into the system"
+					},
+					"response": []
+				},
+				{
+					"name": "Transaction info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"The order Id is correct\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.Id.toString()).to.eql(postman.getGlobalVariable(\"OrderID\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "2.0.0"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "platformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/Transactions/{{OrderID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"Transactions",
+								"{{OrderID}}"
+							]
+						},
+						"description": "Returns recently created information regarding a staged transaction"
+					},
+					"response": []
+				},
+				{
+					"name": "Locations",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/api/Agents/CountryTo/ES/CityTo/Madrid/DeliveryMethod/2/DestinationLocations?ServiceId=111&PayAgentId=6246914",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Agents",
+								"CountryTo",
+								"ES",
+								"CityTo",
+								"Madrid",
+								"DeliveryMethod",
+								"2",
+								"DestinationLocations"
+							],
+							"query": [
+								{
+									"key": "ServiceId",
+									"value": "111"
+								},
+								{
+									"key": "PayAgentId",
+									"value": "6246914"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Password Change",
+			"item": [
+				{
+					"name": "ChangePassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body matches string PasswordsMismatch\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"PasswordsMismatch\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							},
+							{
+								"key": "Platform",
+								"value": "Android"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"OldPassword\": \"Pruebas1234\",\r\n  \"NewPassword\": \"Pruebas12345\",\r\n  \"ConfirmPassword\": \"Pruebas12345\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Account/ChangePassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Account",
+								"ChangePassword"
+							]
+						},
+						"description": "Try to perform a password change"
+					},
+					"response": []
+				},
+				{
+					"name": "RequestResetCode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.0.7"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Account/newEmail41@pruebas.com/RequestResetCode",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Account",
+								"newEmail41@pruebas.com",
+								"RequestResetCode"
+							]
+						},
+						"description": "Request a reset password Code"
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body matches string Failed_Reset_Code\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Failed_Reset_Code\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.0.7"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Email\": \"newEmail41@pruebas.com\",\r\n  \"ResetCode\": \"ABC\",\r\n  \"NewPassword\": \"Pruebas123456\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Account/ResetPassword",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Account",
+								"ResetPassword"
+							]
+						},
+						"description": "Try to Reset Password"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Link Customer",
+			"item": [
+				{
+					"name": "CustomerLink",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body matches string Tu perfil de cliente ya está asociado a otro usuario de la App\", function() {",
+									"    pm.expect(pm.response.text()).to.include(\"Tu perfil de cliente ya está asociado a otro usuario de la App\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"RetVal is 50\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.RetVal).to.eql(50);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.0.7"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Values\": [\r\n    {\r\n      \"Id\": 5,\r\n      \"Value\": \"2017-11-13\"\r\n    },\r\n    {\r\n      \"Id\": 4,\r\n      \"Value\": \"Hh\"\r\n    },\r\n    {\r\n      \"Id\": 8,\r\n      \"Value\": \"2017-11-13\"\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Account/Country/9305/CustomerLink",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Account",
+								"Country",
+								"9305",
+								"CustomerLink"
+							]
+						},
+						"description": "Try to link to an existing customer"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "KYC",
+			"item": [
+				{
+					"name": "KYC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							},
+							{
+								"key": "Platform",
+								"value": "Android"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country\": \"ES\",\r\n  \"mobilephone\": \"656112233\",\r\n  \"kycproviderid\": \"10\",\r\n  \"phoneprefix\": \"0034\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/KYC",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"KYC"
+							]
+						},
+						"description": "Request a Code to open video connection copy"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User settings",
+			"item": [
+				{
+					"name": "Setting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "iOS"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"SettingType\": 11,\r\n  \"SettingArea\": 1,\r\n  \"NewSettingValue\": \"es-ES\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Setting",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Setting"
+							]
+						},
+						"description": "Insert or Update an user setting"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Contact",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"UserName\": \"\",\r\n  \"Name\": \"Raul\",\r\n  \"Surname\": \"pruebas\",\r\n  \"PhoneNumber\": \"656112233\",\r\n  \"EmailAddress\": \"raulprobando@mailinator.com\",\r\n  \"MailContent\": \"Esto es una pruebassssssssszzzz\",\r\n  \"DeviceSpecifications\": {\r\n    \"available\": true,\r\n    \"platform\": \"Android\",\r\n    \"version\": \"7.0\",\r\n    \"uuid\": \"a4ab928731d507ae\",\r\n    \"cordova\": \"6.3.0\",\r\n    \"model\": \"LG-H870\",\r\n    \"manufacturer\": \"LGE\",\r\n    \"isVirtual\": false,\r\n    \"serial\": \"LGH870c3102ae4\",\r\n    \"AppVersion\": \"1.10.12\"\r\n  },\r\n  \"OperatingCountry\": 9305\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Account/SendContactEmail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Account",
+								"SendContactEmail"
+							]
+						},
+						"description": "Send a contact email"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction List",
+			"item": [
+				{
+					"name": "Transactions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Contains OrderId\", function () {",
+									"    pm.expect(pm.response.text()).to.include(postman.getGlobalVariable(\"OrderID\"));",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.0.8"
+							},
+							{
+								"key": "platform",
+								"value": "iOS"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{page: 0}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/Transactions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"Transactions"
+							]
+						},
+						"description": "List transactions associated to a Customer"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Receipts",
+			"item": [
+				{
+					"name": "Receipts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "appVersion",
+								"value": "1.0.8"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"ReceiptTypes\": [\r\n    \"0\"\r\n  ],\r\n  \"EmailTo\": \"{{userEmail}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Receipts/Customers/{{CustomerID}}/Orders/{{receiptOrderID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Receipts",
+								"Customers",
+								"{{CustomerID}}",
+								"Orders",
+								"{{receiptOrderID}}"
+							]
+						},
+						"description": "Sends a Receipt of a Transaction"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sending Certificate",
+			"item": [
+				{
+					"name": "SendingCertificateTransactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "appVersion",
+								"value": "1.0.8"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Certificates/Customers/{{CustomerID}}/SendingCertificateTransactions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Certificates",
+								"Customers",
+								"{{CustomerID}}",
+								"SendingCertificateTransactions"
+							]
+						},
+						"description": "List of Transactions suitable for a Sending Certificate"
+					},
+					"response": []
+				},
+				{
+					"name": "SendingCertificate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.0.8"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"EmailTo\": \"raulsteelmood@gmail.com\",\r\n  \"OrderIds\": [],\r\n  \"AreOrderIdsIncluded\": false,\r\n  \"BeneficiaryID\": null,\r\n  \"DateBegin\": null,\r\n  \"DateEnd\": null\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Certificates/Customers/{{CustomerID}}/SendingCertificate/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Certificates",
+								"Customers",
+								"{{CustomerID}}",
+								"SendingCertificate",
+								""
+							]
+						},
+						"description": "Sends a Sending Certificate"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cancel Transaction",
+			"item": [
+				{
+					"name": "CancelTransaction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "appVersion",
+								"value": "1.10"
+							},
+							{
+								"key": "platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Customers/{{CustomerID}}/CancelTransaction/{{OrderID}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Customers",
+								"{{CustomerID}}",
+								"CancelTransaction",
+								"{{OrderID}}"
+							]
+						},
+						"description": "Cancel a staged transaction"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Locations",
+			"item": [
+				{
+					"name": "Locations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"Body matches string calle\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Calle\");",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Platform",
+								"value": "Android"
+							},
+							{
+								"key": "PlatformVersion",
+								"value": "7.0"
+							},
+							{
+								"key": "AppVersion",
+								"value": "1.10"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/api/Agents/?Longitude=-3.6401634999999715&Latitude=40.5359878&Radius=9.9959763812445&Service=111&sendLocation=true&payoutLocation=true&collectorLocation=true&country=ES\nRequest Method:GET",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Agents",
+								""
+							],
+							"query": [
+								{
+									"key": "Longitude",
+									"value": "-3.6401634999999715"
+								},
+								{
+									"key": "Latitude",
+									"value": "40.5359878"
+								},
+								{
+									"key": "Radius",
+									"value": "9.9959763812445"
+								},
+								{
+									"key": "Service",
+									"value": "111"
+								},
+								{
+									"key": "sendLocation",
+									"value": "true"
+								},
+								{
+									"key": "payoutLocation",
+									"value": "true"
+								},
+								{
+									"key": "collectorLocation",
+									"value": "true"
+								},
+								{
+									"key": "country",
+									"value": "ES\nRequest Method:GET"
+								}
+							]
+						},
+						"description": "Locations with geolocation information and type of service offered copy"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/api/Booking/Save",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Booking",
+								"Save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Country settings",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/api/Booking/GetBookingSettingsByCountry/ES",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Booking",
+								"GetBookingSettingsByCountry",
+								"ES"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booking Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/api/Booking/GetBookingInfo/{bookingid}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Booking",
+								"GetBookingInfo",
+								"{bookingid}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Calculate Amounts ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"Country\": \"string\",\r\n  \"PromoCode\": \"string\",\r\n  \"CurrencyFrom\": \"string\",\r\n  \"CurrencyTo\": \"string\",\r\n  \"AmountFrom\": 0,\r\n  \"AmountTo\": 0,\r\n  \"ErrorResponse\": \"string\",\r\n  \"ErrorID\": 0\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Booking/CalculateAmounts",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Booking",
+								"CalculateAmounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rate  country",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/json, application/xml, text/xml"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{url}}/api/Booking/GetRateSheetByCountry/ES",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Booking",
+								"GetRateSheetByCountry",
+								"ES"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "integracion",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{Token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "bearer lzFOfGrZ88XTTZCl2_wEUM_lwAObQnCG4YkzdJt-MnSWT-x3One2svlkSosGtPVkTdlqtGNzVMAAN9Xb6hdYX1IRQ1eAAle8Oy9KXA2_kAcsjYoSOdjwDAExGIPV41qpf_4KrQThdpS6krK3JMO2StPxEnxkpTjlEICY1nIqPLEOnfMJljLorrJRp0_Q7K8IMi_YEkmG8CkyBm3eptaIOpB5cd1DllqpOmXEt3iVyuLUMc0pgKNQ8XecOnUJXeAQ8KqBUIaShRY7DMh61oJlYNvrG7P_6Hwzw3r_HDSSLXsF_GjgZXLIu-SiOInORG3T7BmpXvgEaAEckeexIw4EgnHPLDvzQfls1juv3eoVRvG3Mjb_oYUKSEkp66Tm1GDhwQOyf4fxocELwLawPU99qrOdfVi3yJq3pvjWXOOnsfAN0ljJSDDJvwILxJRXkQ24W47O5jCDOnDNfVORc7IC-llhwsvQAODO3kt6aaOPJHLjSBDx"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ Amount : 0,\r\nAmountTypeId : 1,\r\nBeneficiaryId : 2166474,\r\nCurrency : \"USD\",\r\nDeviceId : 0,\r\nDeviceTime : \"2017-12-05T17:27:15.958Z\",\r\nLocalDate : \"2017-12-05T17:27:15.958Z\",\r\nPayAgentId : 6246914,\r\nPayAgentLocId :25125511,\r\nUserLanguage :\"es\"}"
+				},
+				"url": {
+					"raw": "https://stagingcustomertoolkit.riaenvia.net/api/Customers/45252677/TransactionPreview",
+					"protocol": "https",
+					"host": [
+						"stagingcustomertoolkit",
+						"riaenvia",
+						"net"
+					],
+					"path": [
+						"api",
+						"Customers",
+						"45252677",
+						"TransactionPreview"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
