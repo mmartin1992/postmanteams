@@ -708,7 +708,7 @@
 								"Transaction"
 							]
 						},
-						"description": "Enters a new staged transaction into the system."
+						"description": "Enters a new staged transaction into the system"
 					},
 					"response": []
 				},
